@@ -9,6 +9,88 @@ Subject: Group Project (Intro to comp sci)
 Objective: Create a blackjack game.
 """
 
+# Slice 1: Deck Creation & Manipulation (Rayan)
+
+import random
+
+deck = []
+deckValues = { "2" : 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8,
+               "9": 9, "10": 10, "J": 10, "Q": 10, "K": 10, "A": 11 } 
+dealerHand = []
+playerHand = []
+
+# Initializes the deck of cards to starting state and resets hands to empty
+def intializeDeck(deck, dealerH, playerH):
+    # empties deck first
+    deck.clear()
+
+    # adds numbered cards to deck
+    for i in range(2, 11):
+        deck.append(str(i) + " spades")
+        deck.append(str(i) + " clubs")
+        deck.append(str(i) + " diamonds")
+        deck.append(str(i) + " hearts")
+    
+    # adds face cards to deck
+    faceCards = ["J", "Q", "K", "A"]
+    for card in faceCards:
+        deck.append(card + " spades")
+        deck.append(card + " clubs")
+        deck.append(card + " diamonds")
+        deck.append(card + " hearts")
+
+    # empties dealer and player hands
+    dealerH.clear()
+    playerH.clear()
+
+    return deck, dealerH, playerH
+
+
+# takes random card from deck and adds to either dealer or player hand
+def dealCard(deck, dealerH, playerH, currentP):
+    # takes out a random card from the deck
+    randomCard = deck.pop(random.randrange(len(deck)))
+
+    # based on who the current player is, adds it to their respective hand
+    if currentP == 1:
+        dealerH.append(randomCard)
+    else :
+        playerH.append(randomCard)
+
+    return randomCard
+
+# takes randomCard and current player and outputs what card has been added and 
+def printCardInfo(randomCard, currentP):
+    # modifies print message based on current player
+    faceCards = ["J", "Q", "K", "A"]
+    if currentP == 1:
+        if randomCard[0] not in faceCards:
+            if randomCard[0] == "1":
+                print("Dealer has: 10 of " + randomCard[3:])
+            else:
+                print("Dealer has: " + randomCard[0] + " of " + randomCard[2:])
+        elif randomCard[0] == "J":
+            print("Dealer has: Jack of " + randomCard[2:])
+        elif randomCard[0] == "Q":
+            print("Dealer has: Queen of " + randomCard[2:])
+        elif randomCard[0] == "K":
+            print("Dealer has: King of " + randomCard[2:])
+        elif randomCard[0] == "A":
+            print("Dealer has: Ace of " + randomCard[2:])
+    else:
+        if randomCard[0] not in faceCards:
+            if randomCard[0] == "1":
+                print("Player has: 10 of " + randomCard[3:])
+            else:
+                print("Player has: " + randomCard[0] + " of " + randomCard[2:])
+        elif randomCard[0] == "J":
+            print("Player has: Jack of " + randomCard[2:])
+        elif randomCard[0] == "Q":
+            print("Player has: Queen of " + randomCard[2:])
+        elif randomCard[0] == "K":
+            print("Player has: King of " + randomCard[2:])
+        elif randomCard[0] == "A":
+            print("Player has: Ace of " + randomCard[2:])        
 
 def main():
     print("CSCI 1030U group project - not built yet.")
@@ -16,6 +98,28 @@ def main():
 
 
     print("Blackjack Introduction message\n")
+
+    #tests for deck creation and manipulation
+    #print(deck)
+    #print(dealerHand)
+    #print(playerHand)
+    #print("")
+
+    intializeDeck(deck, dealerHand, playerHand)
+    #print(deck)
+    #print(dealerHand)
+    #print(playerHand)
+    #print("")
+
+
+    player = 1
+    printCardInfo(dealCard(deck, dealerHand, playerHand, player), player)
+    player = 2
+    printCardInfo(dealCard(deck, dealerHand, playerHand, player), player)
+
+    
+
+    #dealCard(deck, dealerHand, playerHand)
 
     # Create variables and functions above the gameplay loop
     # Cards in deck, no. of players, turn tracker, etc
@@ -29,6 +133,7 @@ def main():
 
     # Main gameplay loop (use break; to exit loop after x amount of turns)
     while (True): 
+        break;
         # Set up board
         # Gambling? In this economy? (Players bet a value) (maybe)
         # Distribution of cards: 2 per player, 2 to dealer (1 hidden depending on which rules we're going by)

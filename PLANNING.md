@@ -14,9 +14,9 @@ In charge of initializing/resetting the deck of cards at the start of each round
 - List for Player hand
 
 **Functions / Responsibilities:**  
-1. initializeDeck
-2. draw/dealCard
-3. printCardInfo
+1. initializeDeck - clears all lists and resets to starting point, full deck, empty hands
+2. dealCard - takes random card from deck and adds to respective players hand
+3. printCardInfo - prints out card info when called
 
 **Process:**  
 1. Deck and hands are initialized using initializeDeck at the start of each round
