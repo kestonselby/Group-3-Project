@@ -8,13 +8,12 @@ networked, multi-user theme - see the "Suggested projects" section of
 
 ## The team
 
-| Full name | GitHub username |
-|-----------|-----------------|
-| <name>    | @<username>     |
-| <name>    | @<username>     |
-| <name>    | @<username>     |
-| <name>    | @<username>     |
-| <name>    | @<username>     |
+| Full name       | GitHub username |
+|-----------------|-----------------|
+| Keston Selby    | @kestonselby    |
+| Rayan Mredha    | @rxyanZ1        |
+| Jerome Laylo    | @Jeromieee      |
+| Zay Ya Aung     | @RylCraig       |
 
 Note:  Be sure to [add all of the group members to as collaborators on this repository](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/repository-access-and-collaboration/inviting-collaborators-to-a-personal-repository).
 
