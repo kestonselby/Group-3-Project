@@ -56,8 +56,7 @@ Worked example:
 
 | Student | Planning | Control flow | Collections | Functions |
 |---------|----------|--------------|-------------|-----------|
-| Rayan   | 1dbdd5b  |              |             |           |
-| <name>  |          |              |             |           |
+| Rayan   | 1dbdd5b  | eb07cc6      | eb07cc6     | eb07cc6   |
 | <name>  |          |              |             |           |
 | <name>  |          |              |             |           |
 | <name>  |          |              |             |           |
@@ -72,13 +71,11 @@ Worked example:
 | <name>  |     |          |           |                   |                     |
 | <name>  |     |          |           |                   |                     |
 | <name>  |     |          |           |                   |                     |
-| <name>  |     |          |           |                   |                     |
 
 ## Milestone 3 - Final Product (Units 04-05)
 
 | Student | Data structure | Algorithm strategy | Sockets | Concurrency |
 |---------|----------------|--------------------|---------|-------------|
-| <name>  |                |                    |         |             |
 | <name>  |                |                    |         |             |
 | <name>  |                |                    |         |             |
 | <name>  |                |                    |         |             |
