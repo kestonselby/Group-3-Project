@@ -21,8 +21,7 @@ in - the rest of this file is one row per member, per milestone, against their s
 
 | Student | Slice (the feature they own) |
 |---------|------------------------------|
-| <name>  | <feature>                    |
-| <name>  | <feature>                    |
+| Rayan   | Deck Creation & Manipulation |
 | <name>  | <feature>                    |
 | <name>  | <feature>                    |
 | <name>  | <feature>                    |
@@ -57,7 +56,7 @@ Worked example:
 
 | Student | Planning | Control flow | Collections | Functions |
 |---------|----------|--------------|-------------|-----------|
-| <name>  |          |              |             |           |
+| Rayan   | 1dbdd5b  |              |             |           |
 | <name>  |          |              |             |           |
 | <name>  |          |              |             |           |
 | <name>  |          |              |             |           |
