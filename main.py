@@ -92,12 +92,9 @@ def printCardInfo(randomCard, currentP):
         elif randomCard[0] == "A":
             print("Player has: Ace of " + randomCard[2:])        
 
-def main():
-    print("CSCI 1030U group project - not built yet.")
-    print("Replace main() with your core loop. See MILESTONES.md for what is due when.")
+# Moved main below, configuring game code as one function so we can have a menu that doesnt run through the game code.
 
-
-    print("Blackjack Introduction message\n")
+def playgame():
 
     #tests for deck creation and manipulation
     #print(deck)
@@ -124,33 +121,92 @@ def main():
     # Create variables and functions above the gameplay loop
     # Cards in deck, no. of players, turn tracker, etc
 
+
     # Feel free to rearrange anything!
 
     # Upper section here is a good place to handle things like a menu, alternative is having a menu at the below __name__ code.
     # I guess technically we should be using the TUI from our lecture?
-
-
+    
+    # Maybe specify turns before game starts? We can have something like a settings menu before the start of the game at later milestones.
 
     # Main gameplay loop (use break; to exit loop after x amount of turns)
-    while (True): 
-        break;
+    while(game):
+        # Handle rounds
+        current_round+=1 # start current_round from 0)
+        if (current_round > max_rounds):
+            # break out of loop and proceed to final score
+            pass
+
         # Set up board
+        intializeDeck(deck, dealerH, playerH)
+        
         # Gambling? In this economy? (Players bet a value) (maybe)
         # Distribution of cards: 2 per player, 2 to dealer (1 hidden depending on which rules we're going by)
 
-        # If dealer has a god pull and does an ace + 10, dealer immediately triggers win condition and the game is reset
+        for i in range(playercount+1): # playercount set to 1 until we finalise code structure
+            dealCard(deck, dealerH, playerH, i)
+            dealCard(deck, dealerH, playerH, i)
 
+        # Calculate initial score (remember ace can be 1 or 11)
+        calculateScore()
+
+        # If dealer has a god pull and does an ace + 10, dealer immediately triggers win condition and the game is reset
+        if (dealerscore == 21):
+            print("Bad luck lmao")
+            break;
 
         # Begin gameplay loop
 
         # Player's turns
+        for playernumber in range(playercount):
 
-        # Print board
-        # List of actions for player to take
+            # Print board
+            printCardInfo(randomCard, currentP)
+
+            # if player [n] has a 21
+                # set player[n] victory condition
+                # break;
+
+            # List of actions for player to take
+            print("1. Hit | 2. Pass | 3. Split | 4. Forfeit") # 5. Double down
+
             # Hit, pass, split(if both cards have the same value (e.g. both are 5, king + queen)), forfeit, (double down)
+            while True:
+                decision = input("Enter choice: ")
+
+                match decision:
+                    case "1":
+                        # add card to hand
+                        printCardInfo(randomCard, currentP)
+
+                        # calculate score
+
+                        if ( score(playernumber) >= 21 ): 
+                            # player has won/bust, move to next player
+                            break;
+
+                        # print board again
+                        # dont break here so they can hit more cards.
+
+                    case "2":
+                        break;
+                    
+                    case "3":
+                        # some special handle split case idk
+                        pass
+                        break;
+
+                    case "4":
+                        # Lose their bet/game
+                        break;
+                    
+                    case _:
+                        print("Invalid entry.")
+                        # dont break here so they loop until they enter a valid option
 
             # Update player cards and score
                 # take care how to handle ace (1 or 11), we can show smth like [6/16] if they have a+5, then if they get a 6, collapse back to [12]
+
             # Update player status
 
             # Idk how we're going to handle splits right now
@@ -158,18 +214,25 @@ def main():
             # Unless we want to store player data in a dictionary similar to how regular games do it
             # See how, we work on a functional base game first
 
-        # Check win condition, if all players bust then dealer wins
-
-
-        # Dealer's turn
-        # Dealer draws cards until at least 17
-        # If dealer busts, remaining players win
-        
+        # if there are still players who havent bust or gotten blackjack:
+            
+            # Dealer's turn
+            # Dealer draws cards until at least 17
+            # If dealer busts, remaining players win
+            
         # Calculate changes in scores of players
+            # If dealer manages to get blackjack:
+                # If player also has blackjack:
+                    # player ties, does not win or lose.
+                # remainng players lose
+            
+            # if dealer does not have blackjack:
+                # if player has blackjack, they win (earns bet + 1.5x of their bet)
+                # elseif player is higher than dealer, they win (earns bet + 1x of their bet)
+                # else, player loses
 
-        # Game repeats until x turns, can be handled with a simple if (turns == x): break; since it will repeat by itself
-        # Maybe specify turns before game starts? We can have something like a settings menu before the start of the game at later milestones.
         pass
+        # Loop until broken by turn handler at the top
 
 
 
@@ -177,9 +240,46 @@ def main():
 
     # Print final scores of the game (money won/lost, rounds won/lost?)
 
-
+    # Wait for input before moving back to menu.
 
     pass
 
+def main():
+    print("CSCI 1030U group project - not built yet.")
+    print("Replace main() with your core loop. See MILESTONES.md for what is due when.")
+
+    print("Blackjack Introduction message\n")
+
+    while True:
+        # clear screen?
+
+        # Display menu options
+        print("1. Start Game")
+        print("2. Settings")
+        print("3. Option 3")
+        print("4. Option 4")
+        print("5. Exit")
+
+        # Get user choice
+        print()
+        choice = input("Enter your choice: ")
+
+        # Call the corresponding function based on user choice
+        match choice:
+            case "1":
+                playgame()
+            case "2":
+                settings_menu()
+            case "3":
+                print("Option 3")
+            case "4":
+                print("Option 4")
+            case "5":
+                break;
+            case _:
+                print("Invalid entry.")
+
+    print("Code has ended.")
+                
 if __name__ == '__main__':
     main()
