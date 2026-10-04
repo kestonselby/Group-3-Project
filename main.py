@@ -90,7 +90,31 @@ def printCardInfo(randomCard, currentP):
         elif randomCard[0] == "K":
             print("Player has: King of " + randomCard[2:])
         elif randomCard[0] == "A":
-            print("Player has: Ace of " + randomCard[2:])        
+            print("Player has: Ace of " + randomCard[2:])    
+
+#Slice 2: Scoring & Showing Hands (Jerome Laylo)
+
+def calculateScore(hand):  
+    score = 0
+    aces = 0 
+    for card in hand:
+        rank = card.split()[0] #Get the rank of the card (e.g. 10 spades -> 10)
+        if rank == "A":
+            aces += 1
+    #if over 21, change aces from 11 to 1
+    while score > 21 and aces > 0:
+        score -= 10
+        aces -= 1
+
+    return score
+
+#prints every card in a hand and its total
+def showhand(hand, name):
+    print(name + "'s hand:")
+    for card in hand:
+        print (" " + card)
+    print (" Total: " + str(calculateScore(hand)))
+
 
 # Moved main below, configuring game code as one function so we can have a menu that doesnt run through the game code.
 
