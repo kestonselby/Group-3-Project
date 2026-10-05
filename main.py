@@ -377,10 +377,11 @@ def how_to_play():
 
         howToPlayChoice = input("Enter your choice: ")
 
+        # Alternatively we could remove the ifelse block (and the loop) so that any input will go back to the main() loop, what do you think?
         if howToPlayChoice == "1":
             break
         else:
-            print("Invalid entry. Press 2 to return to the main menu.")       
+            print("Invalid entry. Press 1 to return to the main menu.")   
                 
 if __name__ == '__main__':
     main()
