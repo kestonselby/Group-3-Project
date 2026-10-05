@@ -116,9 +116,7 @@ def showhand(hand, name):
     print (" Total: " + str(calculateScore(hand)))
 
 
-# Moved main below, configuring game code as one function so we can have a menu that doesnt run through the game code.
-
-def playgame():
+def tempdebug():
 
     #tests for deck creation and manipulation
     #print(deck)
@@ -138,7 +136,8 @@ def playgame():
     player = 2
     printCardInfo(dealCard(deck, dealerHand, playerHand, player), player)
 
-    
+# Moved main below, configuring game code as one function so we can have a menu that doesnt run through the game code.
+def playgame():
 
     #dealCard(deck, dealerHand, playerHand)
 
@@ -153,46 +152,57 @@ def playgame():
     
     # Maybe specify turns before game starts? We can have something like a settings menu before the start of the game at later milestones.
 
-    # Main gameplay loop (use break; to exit loop after x amount of turns)
-    while(game):
+    # Temp variables to get the code in a functional state
+    current_round = 0
+    max_rounds = 2
+    playercount = 1
+
+
+    # Main gameplay loop (use break to exit loop after x amount of turns)
+    while(True):
+        score = [18, 17] # temp scores
+        # Dealer's score is currently added to index 0, might seperate in the future if it makes more sense to do so
+
         # Handle rounds
         current_round+=1 # start current_round from 0)
         if (current_round > max_rounds):
             # break out of loop and proceed to final score
-            pass
+            break
 
         # Set up board
-        intializeDeck(deck, dealerH, playerH)
+        intializeDeck(deck, dealerHand, playerHand)
         
         # Gambling? In this economy? (Players bet a value) (maybe)
         # Distribution of cards: 2 per player, 2 to dealer (1 hidden depending on which rules we're going by)
 
         for i in range(playercount+1): # playercount set to 1 until we finalise code structure
-            dealCard(deck, dealerH, playerH, i)
-            dealCard(deck, dealerH, playerH, i)
+            dealCard(deck, dealerHand, playerHand, i)
+            dealCard(deck, dealerHand, playerHand, i)
 
         # Calculate initial score (remember ace can be 1 or 11)
-        calculateScore()
+        # calculateScore()
+        print("Debug: Score calculating")
+
 
         # If dealer has a god pull and does an ace + 10, dealer immediately triggers win condition and the game is reset
-        if (dealerscore == 21):
+        if (score[0] == 21):
             print("Bad luck lmao")
-            break;
+            break
 
-        # Begin gameplay loop
 
         # Player's turns
-        for playernumber in range(playercount):
+        for playernumber in range(1, playercount+1):
 
             # Print board
-            printCardInfo(randomCard, currentP)
+            # printCardInfo(randomCard, currentP)
+            print("Debug: Printing of board and scores")
 
             # if player [n] has a 21
                 # set player[n] victory condition
-                # break;
+                # break
 
             # List of actions for player to take
-            print("1. Hit | 2. Pass | 3. Split | 4. Forfeit") # 5. Double down
+            print("\n1. Hit | 2. Pass | 3. Split | 4. Forfeit") # 5. Double down
 
             # Hit, pass, split(if both cards have the same value (e.g. both are 5, king + queen)), forfeit, (double down)
             while True:
@@ -201,28 +211,33 @@ def playgame():
                 match decision:
                     case "1":
                         # add card to hand
-                        printCardInfo(randomCard, currentP)
-
+                        # printCardInfo(randomCard, currentP)
+                        score[playernumber] += 2
+                        print(f"Debug: Player hits. Score: {score[playernumber]}")
                         # calculate score
 
-                        if ( score(playernumber) >= 21 ): 
+                        if ( score[playernumber] >= 21 ): 
                             # player has won/bust, move to next player
-                            break;
+                            break
 
                         # print board again
                         # dont break here so they can hit more cards.
 
                     case "2":
-                        break;
+                        print("Debug: Player passes")
+                        break
                     
                     case "3":
                         # some special handle split case idk
+                        print("Debug: Player splits hand")
                         pass
-                        break;
+                        break
 
                     case "4":
                         # Lose their bet/game
-                        break;
+                        print("Debug: Player surrenders")
+                        score[playernumber] = 0
+                        break
                     
                     case _:
                         print("Invalid entry.")
@@ -244,16 +259,26 @@ def playgame():
             # Dealer draws cards until at least 17
             # If dealer busts, remaining players win
             
-        # Calculate changes in scores of players
+        # Calculate changes in scores of players (loop per player?)
             # If dealer manages to get blackjack:
+            if (score[0]==21):
                 # If player also has blackjack:
+                if (score[1]==21):
                     # player ties, does not win or lose.
+                    print("Debug: Tie")
                 # remainng players lose
-            
+
             # if dealer does not have blackjack:
+            else:
                 # if player has blackjack, they win (earns bet + 1.5x of their bet)
+                if (score[1]==21):
+                    print("Debug: Player has blackjack")
                 # elseif player is higher than dealer, they win (earns bet + 1x of their bet)
+                elif (score[1] > score[0]):
+                    print("Debug: Player scores higher than dealer")
                 # else, player loses
+                else:
+                    print("Debug: Player has lost")
 
         pass
         # Loop until broken by turn handler at the top
@@ -268,6 +293,42 @@ def playgame():
 
     pass
 
+def settings_menu():
+    settingsloop = True
+    while settingsloop: # This while loop is for users to be able to view the values after making a change
+        # clear screen?
+
+        # Display menu options
+        print("1. Player Count: 1")
+        print("2. Number of turns: 10")
+        print("3. Hole Card: True/False")
+        print("4. Option 4")
+        print("5. Return")
+
+        # Second loop to reprompt users until a valid choice is made
+        while True:
+            choice = input("Enter your choice: ")
+
+            # Call the corresponding function based on user choice
+            match choice:
+                case "1":
+                    # Prompt for valid change to player count
+                    pass
+                case "2":
+                    # Prompt for valid change to turns
+                    pass
+                case "3":
+                    # Prompt for valid change to hole card boolean
+                    pass
+                case "4":
+                    # Prompt option 4
+                    pass
+                case "5":
+                    settingsloop = False
+                    break
+                case _:
+                    print("Invalid entry.")
+
 def main():
     print("CSCI 1030U group project - not built yet.")
     print("Replace main() with your core loop. See MILESTONES.md for what is due when.")
@@ -278,9 +339,10 @@ def main():
         # clear screen?
 
         # Display menu options
+        print("")
         print("1. Start Game")
         print("2. Settings")
-        print("3. Option 3")
+        print("3. How To Play")
         print("4. Option 4")
         print("5. Exit")
 
@@ -295,15 +357,55 @@ def main():
             case "2":
                 settings_menu()
             case "3":
-                print("Option 3")
+                how_to_play()
             case "4":
-                print("Option 4")
+                print("Debug")
+                tempdebug()
+                # Add and remove functions here for ease of testing
             case "5":
-                break;
+                break
             case _:
                 print("Invalid entry.")
+                # Pause for 1 second so users can read the message.
 
     print("Code has ended.")
+
+#How to play function menu, basically just a text menu that explains how to play blackjack, 
+# and then returns to the main menu when the user presses 1.
+def how_to_play():
+    while True:
+        print("\n========== HOW TO PLAY BLACKJACK ==========")
+        print("The goal of Blackjack is to get as close to 21 as possible")
+        print("without going over 21.\n")
+        print("Card Values:")
+        print("- Number cards (2-10) are worth their number.")
+        print("- J, Q, and K are worth 10.")
+        print("- An Ace (A) is worth 11 or 1, depending on what is better")
+        print("  for your hand.\n")
+        print("How the game works:")
+        print("1. The player and dealer are each dealt two cards.")
+        print("2. The player chooses what to do with their hand.")
+        print("3. Hit - Draw another card.")
+        print("4. Pass - Keep your current hand and end your turn.")
+        print("5. Split - Split your hand when the two cards have the same")
+        print("   value.")
+        print("6. Forfeit - Give up the hand.\n")
+        print("Winning:")
+        print("- Getting exactly 21 is called Blackjack.")
+        print("- If your hand goes over 21, you bust and lose.")
+        print("- If the dealer goes over 21, the remaining player wins.")
+        print("- If your hand is closer to 21 than the dealer's, you win.")
+        print("- If you and the dealer have the same score, it is a tie.\n")
+        print("===========================================")
+        print("1. Back to Main Menu\n")
+
+        howToPlayChoice = input("Enter your choice: ")
+
+        # Alternatively we could remove the ifelse block (and the loop) so that any input will go back to the main() loop, what do you think?
+        if howToPlayChoice == "1":
+            break
+        else:
+            print("Invalid entry. Press 1 to return to the main menu.")   
                 
 if __name__ == '__main__':
     main()
