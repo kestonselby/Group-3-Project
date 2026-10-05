@@ -23,8 +23,8 @@ in - the rest of this file is one row per member, per milestone, against their s
 |---------|------------------------------|
 | Rayan   | Deck Creation & Manipulation |
 | Jerome  | Score calculation & player hand |
-| Zay Ya  | gameplay structure           |
-| <name>  | <feature>                    |
+| Zay Ya  | Gameplay structure               |
+| Keston  | Menu navigation and beginner guide |
 
 <!-- Teams of four: delete the fifth row, here and in the tables below. -->
 
@@ -59,7 +59,7 @@ Worked example:
 | Rayan   | 1dbdd5b  | eb07cc6      | eb07cc6     | eb07cc6   |
 | Jerome  | 693e752  | 892a20c      | 892a20c     | 892a20c   |
 | Zay Ya  | f520d22  | 7984634      | edfee01     | edfee01   |
-| <name>  |          |              |             |           |
+| Keston  |          |              |             |           |
 
 <!-- Optional but recommended: a line per member saying which function or file to look at. -->
 
