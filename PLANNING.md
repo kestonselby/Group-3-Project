@@ -44,3 +44,30 @@ In charge of calculating the score of a hand, including deciding whether eachAce
 4. After all cards are added, while the csore is over 21 and there is still an Ace counted as 11, it subtracts 10 (changing that Ace to 1) and lowers the Ace counter by 1
 5. The final score is returned so other parts of the game (player turn, dealer turn, deciding the winner) can use it
 6. showHand prints the name and each card, then calls calculateScore to print the total score
+
+### Gameplay structure (Zay Ya)
+
+**Purpose:**
+In charge of the central gameplay logic and flow of the code, 
+
+**Data:**
+- Deck (From others' code)
+- Dealer and player hands (From others' code)
+- Int for current round
+- Int for total rounds
+- Int for playercount
+- List of int for score (With assistance from others functions)
+
+**Function / Responsibilities:**
+1. playgame - Begins the game of blackjack. Sets up board, Calls for player turns, handle final score comparison.
+
+**Process:**
+1. Initialise variables
+2. Game starts in a while(True) which constantly loops the code, increments the turn counter, and is immediately met by a condition that exits the loop when the current turn number exceeds the maximum turn number
+3. Deck is called to reset the deck and player hands
+4. Hands are populated with cards
+5. If dealer has a 21, proceed to final score calculation. Else, move on to loop through the players to prompt their input.
+6. During player input, players choose to draw, pass or surrender. If player score reaches above 21, their turn automatically moves on
+7. Final score comparison, compare scores of players and dealer to determine winners, losers and draws.
+8. Game loops back to the top due to the while(True) loop, only exiting due to step 2.
+s
