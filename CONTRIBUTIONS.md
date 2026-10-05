@@ -58,8 +58,8 @@ Worked example:
 |---------|----------|--------------|-------------|-----------|
 | Rayan   | 1dbdd5b  | eb07cc6      | eb07cc6     | eb07cc6   |
 | Jerome  | 693e752  | 892a20c      | 892a20c     | 892a20c   |
-| Zay Ya  | f520d22  | 7984634      | edfee01     | edfee01   |
-| Keston  |          |              |             |           |
+| Zay Ya  | 37db0e4  | 7984634      | edfee01     | edfee01   |
+| Keston  | 7a31e31  | b4a1b6c      | b4a1b6c     | b4a1b6c   |
 
 <!-- Optional but recommended: a line per member saying which function or file to look at. -->
 
