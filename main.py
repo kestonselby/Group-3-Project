@@ -256,7 +256,7 @@ def main():
         # Display menu options
         print("1. Start Game")
         print("2. Settings")
-        print("3. Option 3")
+        print("3. How To Play")
         print("4. Option 4")
         print("5. Exit")
 
@@ -271,15 +271,51 @@ def main():
             case "2":
                 settings_menu()
             case "3":
-                print("Option 3")
+                how_to_play()
             case "4":
                 print("Option 4")
             case "5":
-                break;
+                break
             case _:
                 print("Invalid entry.")
 
     print("Code has ended.")
+
+#How to play function menu, basically just a text menu that explains how to play blackjack, 
+# and then returns to the main menu when the user presses 1.
+def how_to_play():
+    while True:
+        print("\n========== HOW TO PLAY BLACKJACK ==========")
+        print("The goal of Blackjack is to get as close to 21 as possible")
+        print("without going over 21.\n")
+        print("Card Values:")
+        print("- Number cards (2-10) are worth their number.")
+        print("- J, Q, and K are worth 10.")
+        print("- An Ace (A) is worth 11 or 1, depending on what is better")
+        print("  for your hand.\n")
+        print("How the game works:")
+        print("1. The player and dealer are each dealt two cards.")
+        print("2. The player chooses what to do with their hand.")
+        print("3. Hit - Draw another card.")
+        print("4. Pass - Keep your current hand and end your turn.")
+        print("5. Split - Split your hand when the two cards have the same")
+        print("   value.")
+        print("6. Forfeit - Give up the hand.\n")
+        print("Winning:")
+        print("- Getting exactly 21 is called Blackjack.")
+        print("- If your hand goes over 21, you bust and lose.")
+        print("- If the dealer goes over 21, the remaining player wins.")
+        print("- If your hand is closer to 21 than the dealer's, you win.")
+        print("- If you and the dealer have the same score, it is a tie.\n")
+        print("===========================================")
+        print("1. Back to Main Menu\n")
+
+        howToPlayChoice = input("Enter your choice: ")
+
+        if howToPlayChoice == "1":
+            break
+        else:
+            print("Invalid entry. Press 2 to return to the main menu.")          
                 
 if __name__ == '__main__':
     main()
