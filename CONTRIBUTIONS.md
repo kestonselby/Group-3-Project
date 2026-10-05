@@ -57,7 +57,7 @@ Worked example:
 | Student | Planning | Control flow | Collections | Functions |
 |---------|----------|--------------|-------------|-----------|
 | Rayan   | 1dbdd5b  | eb07cc6      | eb07cc6     | eb07cc6   |
-| <name>  |          |              |             |           |
+| Jerome  | 693e752  | 892a20c      | 892a20c     | 892a20c   |
 | Zay Ya  | f520d22  | 7984634      | edfee01     | edfee01   |
 | <name>  |          |              |             |           |
 
