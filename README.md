@@ -1,4 +1,4 @@
-# <your project name>
+# Blackjack
 
 ## The application
 
