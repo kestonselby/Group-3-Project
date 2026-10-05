@@ -22,7 +22,7 @@ in - the rest of this file is one row per member, per milestone, against their s
 | Student | Slice (the feature they own) |
 |---------|------------------------------|
 | Rayan   | Deck Creation & Manipulation |
-| <name>  | <feature>                    |
+| Jerome  | Score Calculation & Showing player hand|
 | <name>  | <feature>                    |
 | <name>  | <feature>                    |
 
