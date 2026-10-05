@@ -70,4 +70,10 @@ In charge of the central gameplay logic and flow of the code,
 6. During player input, players choose to draw, pass or surrender. If player score reaches above 21, their turn automatically moves on
 7. Final score comparison, compare scores of players and dealer to determine winners, losers and draws.
 8. Game loops back to the top due to the while(True) loop, only exiting due to step 2.
-s
+
+### Beginner Guide, Menu Navigation (Keston)
+1. add for case "3" in the switch case match calling the how to play function and also replace "Option 3" -> "How To Play"
+2. in the case "3" bracket call the function How_To_Play so when the user inputs 3 it will do what the function does instead of having it all in case "3"
+3. create the function how_to_play
+4. add all the rules to blackjack in the how to play screen and also add an input to go back to basically the main menu screen or (The 5 options again.)
+5. add an if else statement just in case the user doesn't do the input 1, it tells the user the input he did is invalid. and if the input is 1 it does what end of step 4 says.
