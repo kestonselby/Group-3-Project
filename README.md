@@ -2,8 +2,8 @@
 
 ## The application
 
-<Two or three sentences: what are you building, and who plays or uses it? It has to fit the
-networked, multi-user theme - see the "Suggested projects" section of
+Blackjack: The casino card game where the end goal is to get as close to 21 without getting over, players play against the dealer.
+
 [`MILESTONES.md`](MILESTONES.md). Name one of the suggestions, or describe your own idea.>
 
 ## The team
