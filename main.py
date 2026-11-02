@@ -115,6 +115,50 @@ def showhand(hand, name):
         print (" " + card)
     print (" Total: " + str(calculateScore(hand)))
 
+# Slice: File I/O - Game History (Keston)
+
+def save_game_record(round_number, player_hand, dealer_hand):
+    """Save the cards dealt in a round to a text file."""
+
+    from datetime import datetime
+
+    try:
+        with open("game_history.txt", "a", encoding="utf-8") as file:
+            file.write("BLACKJACK GAME HISTORY\n")
+            file.write("Date: " + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "\n")
+            file.write("Round: " + str(round_number) + "\n")
+            file.write("Player Cards: " + ", ".join(player_hand) + "\n")
+            file.write("Dealer Cards: " + ", ".join(dealer_hand) + "\n")
+            file.write("----------------------------------\n")
+
+        print("Game record saved successfully!")
+
+    except OSError as error:
+        print("Could not save game history:", error)
+
+
+def view_game_history():
+    """Read and display previously saved game records."""
+
+    try:
+        with open("game_history.txt", "r", encoding="utf-8") as file:
+            history = file.read()
+
+        if history.strip():
+            print("\n========== GAME HISTORY ==========")
+            print(history)
+            print("==================================")
+        else:
+            print("No game history available.")
+
+    except FileNotFoundError:
+        print("No game history found. Play a game first.")
+
+    except OSError as error:
+        print("Could not read game history:", error)
+
+
+
 
 def tempdebug():
 
@@ -344,7 +388,8 @@ def main():
         print("2. Settings")
         print("3. How To Play")
         print("4. Option 4")
-        print("5. Exit")
+        print("5. View Game History")
+        print("6. Exit")
 
         # Get user choice
         print()
@@ -362,7 +407,9 @@ def main():
                 print("Debug")
                 tempdebug()
                 # Add and remove functions here for ease of testing
-            case "5":
+            case "5": 
+                view_game_history() 
+            case "6":
                 break
             case _:
                 print("Invalid entry.")
