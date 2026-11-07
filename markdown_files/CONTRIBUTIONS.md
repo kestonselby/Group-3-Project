@@ -65,12 +65,12 @@ Worked example:
 
 ## Milestone 2 - Practical Application (Unit 03)
 
-| Student | OOP | File I/O | Recursion | Command-line args | Interface (TUI/GUI) |
-|---------|-----|----------|-----------|-------------------|---------------------|
-| Rayan   |     |          |           |                   |                     |
-| <name>  |     |          |           |                   |                     |
-| <name>  |     |          |           |                   |                     |
-| <name>  |     |          |           |                   |                     |
+| Student | OOP     | File I/O | Recursion | Command-line args | Interface (TUI/GUI) |
+|---------|---------|----------|-----------|-------------------|---------------------|
+| Rayan   | d4c3640 | d4c3640  | d4c3640   | d4c3640           |                     |
+| <name>  |         |          |           |                   |                     |
+| <name>  |         |          |           |                   |                     |
+| <name>  |         |          |           |                   |                     |
 
 ## Milestone 3 - Final Product (Units 04-05)
 
