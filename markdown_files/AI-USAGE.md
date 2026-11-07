@@ -81,8 +81,7 @@ changed and how you tested it.
 
 | Student | AI tool(s) used | Used it for |
 |---------|-----------------|-------------|
-| <name>  |                 |             |
-| <name>  |                 |             |
+| Rayan   |    ChatGPT      | AI was used for programming concept explanations (argparse and file i/o), implementation planning, and help identifying logic errors. |
 | <name>  |                 |             |
 | <name>  |                 |             |
 | <name>  |                 |             |
@@ -91,7 +90,6 @@ changed and how you tested it.
 
 | Student | AI tool(s) used | Used it for | Generated code? Where, and how you verified it |
 |---------|-----------------|-------------|-----------------------------------------------|
-| <name>  |                 |             |                                               |
 | <name>  |                 |             |                                               |
 | <name>  |                 |             |                                               |
 | <name>  |                 |             |                                               |
