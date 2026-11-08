@@ -19,6 +19,24 @@ deckValues = { "2" : 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8,
 dealerHand = []
 playerHand = []
 
+# Slice: OOP - Player Statistics (Keston)
+
+class PlayerStats:
+    def __init__(self):
+        self.rounds_played = 0
+
+    def record_round(self):
+        self.rounds_played += 1
+
+    def display_stats(self):
+        print("\n========== PLAYER STATISTICS ==========")
+        print("Rounds played:", self.rounds_played)
+        print("=======================================")
+
+
+# Create the PlayerStats object
+player_stats = PlayerStats()
+
 # Initializes the deck of cards to starting state and resets hands to empty
 def intializeDeck(deck, dealerH, playerH):
     # empties deck first
@@ -116,12 +134,14 @@ def showhand(hand, name):
     print (" Total: " + str(calculateScore(hand)))
 
 # Slice: File I/O - Game History (Keston)
-
+# created a function to save the game record to a text file and another function to view the game
+# history from the text file. the game history is saved in a text file called "game_history.txt" in the same 
+# directory as the main.py file. 
 def save_game_record(round_number, player_hand, dealer_hand):
     """Save the cards dealt in a round to a text file."""
 
     from datetime import datetime
-
+    # create a new file if it doesnt exist, otherwise append to the existing file. 
     try:
         with open("game_history.txt", "a", encoding="utf-8") as file:
             file.write("BLACKJACK GAME HISTORY\n")
@@ -132,7 +152,8 @@ def save_game_record(round_number, player_hand, dealer_hand):
             file.write("----------------------------------\n")
 
         print("Game record saved successfully!")
-
+   # added exception handling for OSerror in case the file cannot be opened or written to.
+   #OSerror is a built-in expection that is raised when a system-related error occurs.
     except OSError as error:
         print("Could not save game history:", error)
 
@@ -157,7 +178,24 @@ def view_game_history():
     except OSError as error:
         print("Could not read game history:", error)
 
+# Slice: Recursion - Menu Input Validation (Keston)
 
+def get_valid_choice(prompt, valid_choices, attempts=0):
+    # Stop after five invalid attempts
+    if attempts >= 5:
+        print("Too many invalid attempts. Returning to the menu.")
+        return None
+
+    choice = input(prompt)
+
+    # Base case: the user entered a valid choice
+    if choice in valid_choices:
+        return choice
+
+    print("Invalid entry. Please try again.")
+
+    # Recursive case: call the function again
+    return get_valid_choice(prompt, valid_choices, attempts + 1)
 
 
 def tempdebug():
