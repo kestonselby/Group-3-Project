@@ -1,8 +1,11 @@
 import tkinter as tk
+import sys
+from Deck import Deck
+from Hand import Hand
 # from Deck import Deck
 
 class BlackjackUI:
-    def __init__(self, root):
+    def __init__(self, root, show_soft=False):
         # Init 
         self.root = root
         self.root.title("Group 3 - Blackjack")
@@ -13,8 +16,18 @@ class BlackjackUI:
 
         self.root.configure(bg=self.bgcolour)
 
+        #The game starts without a deck or any dealt cards
+        self.show_soft = show_soft
+        self.deck = None
+        self.player_hand = Hand("Player", show_soft=show_soft)
+        self.dealer_hand = Hand("Dealer", show_soft=show_soft)
+        self.game_over = True
+
         # create window
         self.setup_game()
+        self.update_hand_labels()
+        self.hit_btn.config(state="disabled")
+        self.stand_btn.config(state="disabled")
 
     #  considering fully importing the menu here as well, right now its just the game menu
 
@@ -83,15 +96,47 @@ class BlackjackUI:
         # Maybe replace new game button with exit? Or add somewhere else
 
 
-    
+    def update_hand_labels(self):
+        self.player_cards_label.config(text=", ".join(self.player_hand.cards) if self.player_hand.cards else "[no cards]")
+        self.player_score_label.config(text=f"Score: {self.player_hand.score_display()}", fg="red" if self.player_hand.is_bust() else "lightgray")
+
+        self.dealer_cards_label.config(text=", ".join(self.dealer_hand.cards) if self.dealer_hand.cards else "[no cards]")
+        self.dealer_score_label.config(text=f"Score: {self.dealer_hand.score_display()}", fg="red" if self.dealer_hand.is_bust() else "white")
+
+
+    def finish_game(self, message):
+        self.game_over = True
+        self.status_label.config(text=message)
+        self.hit_btn.config(state="disabled")
+        self.stand_btn.config(state="disabled")
+
     def handle_newgame(self):
         # button action for new game
         self.status_label.config(text="Game Started!")
-        root.after(1000, self.clear_message) # clears text 1 second after start
-        # TODO: initialize Deck()
-        # TODO: deal 2 to each(?) player and dealer
-        # TODO: update UI
-        self.player_cards_label.config(text="10 spades   5 clubs")
+    
+        # Create a fresh deck and empty hands
+        self.deck = Deck()
+        self.player_hand = Hand("Player", show_soft=self.show_soft)
+        self.dealer_hand = Hand("Dealer", show_soft=self.show_soft)
+
+        # Deal two cards to each hand
+        for _ in range(2):
+            self.player_hand.add_card(self.deck.dealCard())
+            self.dealer_hand.add_card(self.deck.dealCard())
+
+        self.game_over = False
+        self.hit_btn.config(state="normal")
+        self.stand_btn.config(state="normal")
+        self.update_hand_labels()
+
+        if self.player_hand.is_blackjack() and self.dealer_hand.is_blackjack():
+            self.finish_game("Both have blackjack! Tie!")
+        elif self.player_hand.is_blackjack():
+            self.finish_game("Blackjack! Player wins!")
+        elif self.dealer_hand.is_blackjack():
+            self.finish_game("Dealer has blackjack! Dealer wins!")
+        else:
+            self.status_label.config(text="Game started! Hit or Stand.")
 
         # I didnt know vscode auto colours TODO, its nice
 
@@ -102,27 +147,42 @@ class BlackjackUI:
     def handle_hit(self):
         # button action for hit
         # TODO: draw card from deck, add to player hand
-        self.status_label.config(text="Player hits")
-        root.after(1000, self.clear_message)
-        # TODO: calculate and update score
-        # TODO: if score > 21, display bust message (and disable hit so the player can only stand or end game)
-        # I feel like maybe figure out how to auto next round if player auto wins/loses
-        pass
+        if self.game_over:
+            return
 
+        self.player_hand.add_card(self.deck.dealCard())
+        self.update_hand_labels()
+
+        if self.player_hand.is_bust():
+            self.finish_game("Player busts! Dealer wins.")
+        else:
+            self.status_label.config(text="Player hits. Hit or Stand?")
+        
     def handle_stand(self):
-        # button action for stand/pass
-        self.status_label.config(text="Player stands")
-        root.after(1000, self.clear_message)
-        # TODO: dealer draws cards until >= 17
-        # TODO: compare scores and update status label with winner
-        pass
+        if self.game_over:
+            return
+
+        # The dealer draws until reaching at least 17.
+        while self.dealer_hand.score() < 17:
+            self.dealer_hand.add_card(self.deck.dealCard())
+
+        self.update_hand_labels()
+
+        if self.dealer_hand.is_bust():
+            self.finish_game("Dealer busts! Player wins!")
+        elif self.player_hand.score() > self.dealer_hand.score():
+            self.finish_game("Player wins!")
+        elif self.player_hand.score() < self.dealer_hand.score():
+            self.finish_game("Dealer wins!")
+        else:
+            self.finish_game("Tie game!")
 
     def handle_split(self):
-        # split code
+        # Splitting is not implemented yet.
         pass
 
-# lets you run python tui.py to see the layout cause otherwise i would have to keep starting from main.py
+
 if __name__ == "__main__":
     root = tk.Tk()
-    app = BlackjackUI(root)
+    app = BlackjackUI(root, show_soft="--show-soft" in sys.argv)
     root.mainloop()
