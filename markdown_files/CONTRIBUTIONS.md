@@ -68,9 +68,9 @@ Worked example:
 | Student | OOP     | File I/O | Recursion | Command-line args | Interface (TUI/GUI) |
 |---------|---------|----------|-----------|-------------------|---------------------|
 | Rayan   | d4c3640 | d4c3640  | d4c3640   | d4c3640           |                     |
-| <name>  |         |          |           |                   |                     |
-| <name>  |         |          |           |                   |                     |
-| <name>  |         |          |           |                   |                     |
+| Jerome  | 9d4a1dd | 6fd5a44  | 6fd5a44   | dcdc567           | 52acfd7             |
+| Keston  |         | 1a8cc8c  |           |                   |                     |
+| Zay Ya  | 4b9dcbd |          |           | bc053a7           | 9152202             |
 
 ## Milestone 3 - Final Product (Units 04-05)
 
