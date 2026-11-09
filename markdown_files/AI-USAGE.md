@@ -82,7 +82,7 @@ changed and how you tested it.
 | Student | AI tool(s) used | Used it for |
 |---------|-----------------|-------------|
 | Rayan   |    ChatGPT      | AI was used for programming concept explanations (argparse and file i/o), implementation planning, and help identifying logic errors. |
-| <name>  |                 |             |
+| Zay Ya  |    Gemini       | AI was used to diagnose errors and investigate possible solutions to a plan.  |
 | <name>  |                 |             |
 | <name>  |                 |             |
 
