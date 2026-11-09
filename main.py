@@ -133,7 +133,7 @@ def showhand(hand, name):
         print (" " + card)
     print (" Total: " + str(calculateScore(hand)))
 
-# Slice: File I/O - Game History (Keston)
+# Slice 3: File I/O - Game History (Keston)
 # created a function to save the game record to a text file and another function to view the game
 # history from the text file. the game history is saved in a text file called "game_history.txt" in the same 
 # directory as the main.py file. 
@@ -178,7 +178,7 @@ def view_game_history():
     except OSError as error:
         print("Could not read game history:", error)
 
-# Slice: Recursion - Menu Input Validation (Keston)
+# Slice 3: Recursion - Menu Input Validation (Keston)
 
 def get_valid_choice(prompt, valid_choices, attempts=0):
     # Stop after five invalid attempts
@@ -219,7 +219,7 @@ def tempdebug():
     printCardInfo(dealCard(deck, dealerHand, playerHand, player), player)
 
 # Moved main below, configuring game code as one function so we can have a menu that doesnt run through the game code.
-def playgame():
+def playgame(max_rounds=2):
 
     #dealCard(deck, dealerHand, playerHand)
 
@@ -236,7 +236,6 @@ def playgame():
 
     # Temp variables to get the code in a functional state
     current_round = 0
-    max_rounds = 2
     playercount = 1
 
 
@@ -253,6 +252,9 @@ def playgame():
 
         # Set up board
         intializeDeck(deck, dealerHand, playerHand)
+
+        # Record the round
+        player_stats.record_round()
         
         # Gambling? In this economy? (Players bet a value) (maybe)
         # Distribution of cards: 2 per player, 2 to dealer (1 hidden depending on which rules we're going by)
@@ -411,11 +413,18 @@ def settings_menu():
                 case _:
                     print("Invalid entry.")
 
-def main():
+def main(rounds=2, show_history=False, show_stats=False):
     print("CSCI 1030U group project - not built yet.")
     print("Replace main() with your core loop. See MILESTONES.md for what is due when.")
 
     print("Blackjack Introduction message\n")
+
+        # Display information requested through command-line arguments
+    if show_history:
+        view_game_history()
+
+    if show_stats:
+        player_stats.display_stats()
 
     while True:
         # clear screen?
@@ -425,18 +434,21 @@ def main():
         print("1. Start Game")
         print("2. Settings")
         print("3. How To Play")
-        print("4. Option 4")
+        print("4. Test Debug")
         print("5. View Game History")
-        print("6. Exit")
+        print("6. View Player Stats")
+        print("7. Exit")
 
         # Get user choice
         print()
-        choice = input("Enter your choice: ")
+        choice = get_valid_choice( "Enter your choice: ",["1", "2", "3", "4", "5", "6", "7"])
+        if choice is None:
+            continue
 
         # Call the corresponding function based on user choice
         match choice:
             case "1":
-                playgame()
+                playgame(rounds)
             case "2":
                 settings_menu()
             case "3":
@@ -448,6 +460,8 @@ def main():
             case "5": 
                 view_game_history() 
             case "6":
+                player_stats.display_stats()
+            case "7":
                 break
             case _:
                 print("Invalid entry.")
