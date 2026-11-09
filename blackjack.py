@@ -2,6 +2,9 @@ import argparse
 from Deck import Deck
 from Hand import Hand
 
+import tkinter as tk
+from tui import BlackjackUI
+
 parser = argparse.ArgumentParser()
 
 # cmd line arugment addition (rayan)
@@ -30,3 +33,22 @@ print(player_hand.show())
 
 
 
+
+def main():
+    while True:
+        # Import menu functions - to turn into tkinter ui as well if time permits
+        print("1. Start Game")
+        print("2. Exit")
+        choice = input("Enter choice: ")
+
+        match choice:
+            case "1":
+                root = tk.Tk()
+                app = BlackjackUI(root)
+                root.mainloop()
+                break
+            case "2":
+                break
+
+if __name__ == '__main__':
+    main()
