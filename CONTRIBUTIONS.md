@@ -65,12 +65,12 @@ Worked example:
 
 ## Milestone 2 - Practical Application (Unit 03)
 
-| Student | OOP | File I/O | Recursion | Command-line args | Interface (TUI/GUI) |
-|---------|-----|----------|-----------|-------------------|---------------------|
-| Jerome  | 9d4a1dd | 6fd          |           |                   |                     |
-| keston  |     | 1a8cc8c  |           |                   |                     |
-| <name>  |     |          |           |                   |                     |
-| <name>  |     |          |           |                   |                     |
+| Student | OOP     | File I/O | Recursion | Command-line args | Interface (TUI/GUI) |
+|---------|-----    |----------|-----------|-------------------|---------------------|
+| Jerome  | 9d4a1dd | 6fd5a44  | 6fd5a44   |    dcdc567        |      52acfd7        |
+| keston  |         | 1a8cc8c  |           |                   |                     |
+| <name>  |         |          |           |                   |                     |
+| <name>  |         |          |           |                   |                     |
 
 ## Milestone 3 - Final Product (Units 04-05)
 
