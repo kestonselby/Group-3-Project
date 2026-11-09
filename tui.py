@@ -2,44 +2,48 @@ import tkinter as tk
 import sys
 from Deck import Deck
 from Hand import Hand
-# from Deck import Deck
 
 class BlackjackUI:
-    def __init__(self, root, show_soft=False):
-        # Init 
+    def __init__(self, root, args):
         self.root = root
         self.root.title("Group 3 - Blackjack")
         self.root.geometry("800x500") # Window size
 
-        # why do i need to add this to self for it to work
         self.bgcolour = "#2b7a38" # global background colour variable
 
         self.root.configure(bg=self.bgcolour)
 
         #The game starts without a deck or any dealt cards
-        self.show_soft = show_soft
+        self.show_soft = args.show_soft
         self.deck = None
-        self.player_hand = Hand("Player", show_soft=show_soft)
-        self.dealer_hand = Hand("Dealer", show_soft=show_soft)
+        self.player_hand = Hand("Player", show_soft=args.show_soft)
+        self.dealer_hand = Hand("Dealer", show_soft=args.show_soft)
         self.game_over = True
+
+        self.hole_card = args.hole_card
+
+        # this variable is specifically to track the 1s timer status so it doesnt overlap
+        self.message_timer = None
 
         # create window
         self.setup_game()
         self.update_hand_labels()
-        self.hit_btn.config(state="disabled")
-        self.stand_btn.config(state="disabled")
+
+        self.hit_btn.grid_remove()
+        self.stand_btn.grid_remove()
+        self.split_btn.grid_remove() # nyi
 
     #  considering fully importing the menu here as well, right now its just the game menu
+    def menu(self):
 
+        pass
 
 
     def setup_game(self):
         # DEALER SECTION (top of screen)
-
         self.dealer_frame = tk.Frame(self.root, bg=self.bgcolour)
         self.dealer_frame.pack(pady=20)
         # pack() stacks elements vertically
-        # i dont know why this took me a significant amount of time to learn how to do
         # padx pady is margin equivalent of html
 
         # label is for text elements
@@ -55,7 +59,6 @@ class BlackjackUI:
 
 
         # MIDDLE SECTION (to display game messages)
-        # Note: remember to hide/set to empty string during the game
         self.status_label = tk.Label(self.root, text="Play Blackjack!", bg=self.bgcolour, fg="black", font=("Arial", 16, "bold"))
         self.status_label.pack(pady=30)
 
@@ -82,14 +85,12 @@ class BlackjackUI:
         self.hit_btn = tk.Button(self.button_frame, text="Hit", command=self.handle_hit, width=10, font=("Arial", 12))
         self.hit_btn.grid(row=0, column=0, padx=10)
         # grid() aligns items in rows and columns much easier than html
-        # padx here is margin to the side of buttons
 
         self.stand_btn = tk.Button(self.button_frame, text="Stand", command=self.handle_stand, width=10, font=("Arial", 12))
         self.stand_btn.grid(row=0, column=1, padx=10)
 
         self.split_btn = tk.Button(self.button_frame, text="Split", command=self.handle_split, width=10, font=("Arial", 12))
         self.split_btn.grid(row=0, column=2, padx=10)
-        self.split_btn.config(state="disabled") # need to figure out how to split first
 
         self.deal_btn = tk.Button(self.button_frame, text="New Game", command=self.handle_newgame, width=15, font=("Arial", 12))
         self.deal_btn.grid(row=0, column=3, padx=10)
@@ -100,19 +101,34 @@ class BlackjackUI:
         self.player_cards_label.config(text=", ".join(self.player_hand.cards) if self.player_hand.cards else "[no cards]")
         self.player_score_label.config(text=f"Score: {self.player_hand.score_display()}", fg="red" if self.player_hand.is_bust() else "lightgray")
 
-        self.dealer_cards_label.config(text=", ".join(self.dealer_hand.cards) if self.dealer_hand.cards else "[no cards]")
-        self.dealer_score_label.config(text=f"Score: {self.dealer_hand.score_display()}", fg="red" if self.dealer_hand.is_bust() else "white")
+        if self.game_over or not self.hole_card:
+            self.dealer_cards_label.config(text=", ".join(self.dealer_hand.cards) if self.dealer_hand.cards else "[no cards]")
+            self.dealer_score_label.config(text=f"Score: {self.dealer_hand.score_display()}", fg="red" if self.dealer_hand.is_bust() else "white")
+        else:
+            self.dealer_cards_label.config(text=f"[? ?], {self.dealer_hand.cards[1]}" if self.dealer_hand.cards else "[no cards]")
+            self.dealer_score_label.config(text=f"Score: {self.dealer_hand.score_display(self.hole_card)}", fg="red" if self.dealer_hand.is_bust() else "white")
 
 
     def finish_game(self, message):
         self.game_over = True
+        self.update_hand_labels() # update again to display final score
         self.status_label.config(text=message)
         self.hit_btn.config(state="disabled")
         self.stand_btn.config(state="disabled")
+        self.deal_btn.grid()
+
+        if self.message_timer is not None:
+            self.root.after_cancel(self.message_timer)
+            self.message_timer = None
 
     def handle_newgame(self):
         # button action for new game
+
+        # remove the newgame button until game has ended
+        self.deal_btn.grid_remove()
+
         self.status_label.config(text="Game Started!")
+        self.message_timer = self.root.after(1000, self.clear_message) # clears text 1 second after start
     
         # Create a fresh deck and empty hands
         self.deck = Deck()
@@ -138,27 +154,43 @@ class BlackjackUI:
         else:
             self.status_label.config(text="Game started! Hit or Stand.")
 
-        # I didnt know vscode auto colours TODO, its nice
 
-    def clear_message(self):
-        self.status_label.config(text="")
-    
+        # show the player action buttons
+        self.hit_btn.grid()
+        self.stand_btn.grid()
+        # self.split_btn.grid()
+
+
 
     def handle_hit(self):
         # button action for hit
-        # TODO: draw card from deck, add to player hand
+
         if self.game_over:
             return
+        
+        self.status_label.config(text="Player hits")
+        if self.message_timer is not None: # if there is an existing timer
+            self.root.after_cancel(self.message_timer) # cancel previous 1s timer
+        self.message_timer = self.root.after(1000, self.clear_message) # make new 1s timer
+        
+        
+        # draw card from deck, add to player hand
+        card = self.deck.dealCard()
+        self.player_hand.add_card(card)
 
-        self.player_hand.add_card(self.deck.dealCard())
         self.update_hand_labels()
 
         if self.player_hand.is_bust():
             self.finish_game("Player busts! Dealer wins.")
         else:
             self.status_label.config(text="Player hits. Hit or Stand?")
+
+        # automatic stand after reaching blackjack
+        if self.player_hand.is_blackjack():
+            self.handle_stand()
         
     def handle_stand(self):
+        # button action for stand/pass
         if self.game_over:
             return
 
@@ -177,11 +209,26 @@ class BlackjackUI:
         else:
             self.finish_game("Tie game!")
 
+        # again, disable action buttons
+        self.hit_btn.grid()
+        self.stand_btn.grid()
+        # self.split_btn.grid()
+
+        # re-show the new game button
+        self.deal_btn.grid()
+
+
     def handle_split(self):
         # Splitting is not implemented yet.
         pass
 
 
+    def clear_message(self):
+        self.status_label.config(text="")
+        self.message_timer = None
+
+
+# lets you run python tui.py directly
 if __name__ == "__main__":
     root = tk.Tk()
     app = BlackjackUI(root, show_soft="--show-soft" in sys.argv)
