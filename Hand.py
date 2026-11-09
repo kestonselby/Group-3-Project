@@ -111,4 +111,13 @@ if __name__ == "__main__":
     print(hand3.show())
     assert hand3.score_display() == "6/16"
 
+    hand4 = Hand("Player")
+    hand4.add_card("A spades")
+    hand4.add_card("A hearts")
+    hand4.add_card("A clubs")
+    hand4.add_card("9 diamonds")
+
+    print(hand4.show())
+    assert hand4.score() == 12
+
     print("Part B and D tests passed!")

@@ -151,5 +151,14 @@
         "A clubs",
         "A diamonds",
         "A hearts"
+    ],
+    "save99_hands": [
+        {
+            "owner": "Player",
+            "cards": [
+                "A spades",
+                "5 hearts"
+            ]
+        }
     ]
 }

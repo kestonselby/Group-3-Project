@@ -1,10 +1,14 @@
 import argparse
 from Deck import Deck
+from Hand import Hand
 
 parser = argparse.ArgumentParser()
 
 # cmd line arugment addition (rayan)
 parser.add_argument("--load-save", type=int, help="Choose a game-save to load from")
+
+# cmd line argumment to display soft scores (jerome)
+parser.add_argument("--show-soft", action="store_true", help="Show soft Ace scores")
 
 args = parser.parse_args()
 
@@ -12,6 +16,14 @@ args = parser.parse_args()
 if args.load_save:
     gameDeck = Deck()
     gameDeck.loadDeck(args.load_save)
+
+# Temporary test for show-soft
+player_hand = Hand("Player", show_soft=args.show_soft)
+
+player_hand.add_card("A spades")
+player_hand.add_card("5 hearts")
+
+print(player_hand.show())
 
 
 # MAIN GAME LOGIC GOES HERE
