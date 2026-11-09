@@ -13,6 +13,9 @@ parser.add_argument("--load-save", type=int, help="Choose a game-save to load fr
 # cmd line argumment to display soft scores (jerome)
 parser.add_argument("--show-soft", action="store_true", help="Show soft Ace scores")
 
+# cmd line argumment to enable dealer hole card (zay)
+parser.add_argument("--hole-card", action="store_true", help="Hide dealer's first card")
+
 args = parser.parse_args()
 
 # loads specific save deck as current game
@@ -21,12 +24,12 @@ if args.load_save:
     gameDeck.loadDeck(args.load_save)
 
 # Temporary test for show-soft
-player_hand = Hand("Player", show_soft=args.show_soft)
+# player_hand = Hand("Player", show_soft=args.show_soft)
 
-player_hand.add_card("A spades")
-player_hand.add_card("5 hearts")
+# player_hand.add_card("A spades")
+# player_hand.add_card("5 hearts")
 
-print(player_hand.show())
+# print(player_hand.show())
 
 
 # MAIN GAME LOGIC GOES HERE
@@ -37,17 +40,29 @@ print(player_hand.show())
 def main():
     while True:
         # Import menu functions - to turn into tkinter ui as well if time permits
-        print("1. Start Game")
-        print("2. Exit")
+        print("\n1. Start Game")
+        print("2. View Arguments")
+        print("3. Exit")
         choice = input("Enter choice: ")
 
         match choice:
             case "1":
                 root = tk.Tk()
-                app = BlackjackUI(root)
+                app = BlackjackUI(root, args)
                 root.mainloop()
                 break
             case "2":
+                while True:
+                    print("\nOptions:")
+                    print(f"1. Soft Hand: {args.show_soft}")
+                    print(f"2. Hole Card: {args.hole_card}")
+                    print(f"3. Return")
+                    choice = input("Toggle: ")
+                    match choice:
+                        case "1": args.show_soft = not getattr(args, 'show_soft', False)
+                        case "2": args.hole_card = not getattr(args, 'hole_card', False)
+                        case "3": break
+            case "3":
                 break
 
 if __name__ == '__main__':

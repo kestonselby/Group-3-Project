@@ -4,7 +4,7 @@ from Deck import Deck
 from Hand import Hand
 
 class BlackjackUI:
-    def __init__(self, root, show_soft=False):
+    def __init__(self, root, args):
         self.root = root
         self.root.title("Group 3 - Blackjack")
         self.root.geometry("800x500") # Window size
@@ -14,11 +14,13 @@ class BlackjackUI:
         self.root.configure(bg=self.bgcolour)
 
         #The game starts without a deck or any dealt cards
-        self.show_soft = show_soft
+        self.show_soft = args.show_soft
         self.deck = None
-        self.player_hand = Hand("Player", show_soft=show_soft)
-        self.dealer_hand = Hand("Dealer", show_soft=show_soft)
+        self.player_hand = Hand("Player", show_soft=args.show_soft)
+        self.dealer_hand = Hand("Dealer", show_soft=args.show_soft)
         self.game_over = True
+
+        self.hole_card = args.hole_card
 
         # this variable is specifically to track the 1s timer status so it doesnt overlap
         self.message_timer = None
@@ -99,12 +101,17 @@ class BlackjackUI:
         self.player_cards_label.config(text=", ".join(self.player_hand.cards) if self.player_hand.cards else "[no cards]")
         self.player_score_label.config(text=f"Score: {self.player_hand.score_display()}", fg="red" if self.player_hand.is_bust() else "lightgray")
 
-        self.dealer_cards_label.config(text=", ".join(self.dealer_hand.cards) if self.dealer_hand.cards else "[no cards]")
-        self.dealer_score_label.config(text=f"Score: {self.dealer_hand.score_display()}", fg="red" if self.dealer_hand.is_bust() else "white")
+        if self.game_over or not self.hole_card:
+            self.dealer_cards_label.config(text=", ".join(self.dealer_hand.cards) if self.dealer_hand.cards else "[no cards]")
+            self.dealer_score_label.config(text=f"Score: {self.dealer_hand.score_display()}", fg="red" if self.dealer_hand.is_bust() else "white")
+        else:
+            self.dealer_cards_label.config(text=f"[? ?], {self.dealer_hand.cards[1]}" if self.dealer_hand.cards else "[no cards]")
+            self.dealer_score_label.config(text=f"Score: {self.dealer_hand.score_display(self.hole_card)}", fg="red" if self.dealer_hand.is_bust() else "white")
 
 
     def finish_game(self, message):
         self.game_over = True
+        self.update_hand_labels() # update again to display final score
         self.status_label.config(text=message)
         self.hit_btn.config(state="disabled")
         self.stand_btn.config(state="disabled")

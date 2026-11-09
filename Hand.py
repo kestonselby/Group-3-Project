@@ -39,10 +39,21 @@ class Hand:
         return len(self.cards) == 2 and self.score() == 21
 
     # Displays 6/16 for A+5 only when --show-soft was enabled
-    def score_display(self):
+    def score_display(self, hole_card_status=False):
         total = self.score()
         aces = sum(card.split()[0] == "A" for card in self.cards)
         raw_total = sum(Deck.CARD_VALUES[card.split()[0]] for card in self.cards)
+
+        if hole_card_status:
+            hole_card = self.cards[0].split()[0]
+            if hole_card == 'A':
+                total -= 11
+                aces -= 1
+            elif hole_card in ["J", "Q", "K", "A"]:
+                total -= 10
+            else:
+                total -= int(hole_card)
+
 
         # At least one Ace is still counted as 11
         has_soft_ace = aces > 0 and (raw_total - total) < 10 * aces
