@@ -19,9 +19,9 @@ parser.add_argument("--hole-card", action="store_true", help="Hide dealer's firs
 args = parser.parse_args()
 
 # loads specific save deck as current game
-if args.load_save:
-    gameDeck = Deck()
-    gameDeck.loadDeck(args.load_save)
+# if args.load_save:
+#     gameDeck = Deck()
+#     gameDeck.loadDeck(args.load_save)
 
 # Temporary test for show-soft
 # player_hand = Hand("Player", show_soft=args.show_soft)
@@ -56,12 +56,20 @@ def main():
                     print("\nOptions:")
                     print(f"1. Soft Hand: {args.show_soft}")
                     print(f"2. Hole Card: {args.hole_card}")
-                    print(f"3. Return")
+                    print(f"3. Load Save: {args.load_save}")
+                    print(f"4. Return")
                     choice = input("Toggle: ")
                     match choice:
                         case "1": args.show_soft = not getattr(args, 'show_soft', False)
                         case "2": args.hole_card = not getattr(args, 'hole_card', False)
-                        case "3": break
+                        case "3": 
+                            save_num = input("Enter save number: ")
+                            try:
+                                args.load_save = int(save_num)
+                            except:
+                                print("\nINVALID NUMBER.")
+                            pass
+                        case _: break
             case "3":
                 break
 

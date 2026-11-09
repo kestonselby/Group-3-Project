@@ -1,13 +1,13 @@
 import tkinter as tk
 import sys
 from Deck import Deck
-from Hand import Hand
+from Hand import Hand, save_hands, load_hands
 
 class BlackjackUI:
     def __init__(self, root, args):
         self.root = root
         self.root.title("Group 3 - Blackjack")
-        self.root.geometry("800x500") # Window size
+        self.root.geometry("800x530") # Window size
 
         self.bgcolour = "#2b7a38" # global background colour variable
 
@@ -15,12 +15,13 @@ class BlackjackUI:
 
         #The game starts without a deck or any dealt cards
         self.show_soft = args.show_soft
-        self.deck = None
+        self.deck = Deck()
         self.player_hand = Hand("Player", show_soft=args.show_soft)
         self.dealer_hand = Hand("Dealer", show_soft=args.show_soft)
         self.game_over = True
 
         self.hole_card = args.hole_card
+        self.save_slot = getattr(args, 'load_save', None)
 
         # this variable is specifically to track the 1s timer status so it doesnt overlap
         self.message_timer = None
@@ -32,6 +33,13 @@ class BlackjackUI:
         self.hit_btn.grid_remove()
         self.stand_btn.grid_remove()
         self.split_btn.grid_remove() # nyi
+        self.save_btn.pack_forget() # prevent saving of nothing
+        self.save_frame.config(bg=self.bgcolour)
+
+        # if save parameter passed, attempt to load save
+        if self.save_slot:
+            self.load_game(self.save_slot)
+
 
     #  considering fully importing the menu here as well, right now its just the game menu
     def menu(self):
@@ -94,7 +102,14 @@ class BlackjackUI:
 
         self.deal_btn = tk.Button(self.button_frame, text="New Game", command=self.handle_newgame, width=15, font=("Arial", 12))
         self.deal_btn.grid(row=0, column=3, padx=10)
-        # Maybe replace new game button with exit? Or add somewhere else
+
+        
+        # The SAVE Layer
+        self.save_frame = tk.Frame(self.root, bg="#FB9B45", bd=0)
+        self.save_frame.pack(pady=25)
+        self.save_btn = tk.Button(self.save_frame, text="🟄 SAVE", command=self.handle_save, width=7, height=2, font=("OCR A", 20, "bold"), fg="#FB9B45", bg="black", bd=0, relief="flat")
+        self.save_btn.pack(padx=3, pady=3)
+
 
 
     def update_hand_labels(self):
@@ -117,6 +132,10 @@ class BlackjackUI:
         self.stand_btn.config(state="disabled")
         self.deal_btn.grid()
 
+        self.save_btn.pack_forget() # prevent saving of done game
+        self.save_frame.config(bg=self.bgcolour)
+        
+
         if self.message_timer is not None:
             self.root.after_cancel(self.message_timer)
             self.message_timer = None
@@ -131,7 +150,7 @@ class BlackjackUI:
         self.message_timer = self.root.after(1000, self.clear_message) # clears text 1 second after start
     
         # Create a fresh deck and empty hands
-        self.deck = Deck()
+        self.deck.resetDeck()
         self.player_hand = Hand("Player", show_soft=self.show_soft)
         self.dealer_hand = Hand("Dealer", show_soft=self.show_soft)
 
@@ -159,6 +178,9 @@ class BlackjackUI:
         self.hit_btn.grid()
         self.stand_btn.grid()
         # self.split_btn.grid()
+
+        self.save_btn.pack(padx=3, pady=3)
+        self.save_frame.config(bg="#FB9B45")
 
 
 
@@ -226,6 +248,51 @@ class BlackjackUI:
     def clear_message(self):
         self.status_label.config(text="")
         self.message_timer = None
+
+
+    def handle_save(self):
+        # Ensure there is data to save in the first place
+        if self.deck and self.player_hand and self.dealer_hand:
+            # default to slot 42 if no slot was specified
+            slot = self.save_slot if self.save_slot else 42
+            
+            self.deck.saveDeck(slot)
+            save_hands(slot, [self.player_hand, self.dealer_hand])
+            
+            self.status_label.config(text=f"Game saved to slot {slot}!")
+            if self.message_timer:
+                self.root.after_cancel(self.message_timer)
+            self.message_timer = self.root.after(2000, self.clear_message)
+    pass
+
+    def load_game(self, slot):
+        # call load code
+        self.deck.loadDeck(slot)
+        hands = load_hands(slot, self.show_soft)
+        
+        # verify both hands loaded correctly
+        if len(hands) == 2:
+            self.player_hand = hands[0]
+            self.dealer_hand = hands[1]
+
+            # enable game buttons
+            self.game_over = False
+            self.hit_btn.config(state="normal")
+            self.stand_btn.config(state="normal")
+            self.hit_btn.grid()
+            self.stand_btn.grid()
+
+            self.save_btn.pack(padx=3, pady=3)
+            self.save_frame.config(bg="#FB9B45")
+
+             # re hide new game button
+            self.deal_btn.grid_remove()
+            
+            self.update_hand_labels()
+            self.status_label.config(text=f"Loaded save {slot} successfully!")
+        else:
+            # invalid loading
+            self.status_label.config(text="Save invalid.")
 
 
 # lets you run python tui.py directly
