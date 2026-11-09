@@ -92,4 +92,30 @@ class Deck:
             return self.validateDeck(saveDeck, index-1)
         else:
             return False    
+
+    # (zay ya) added popular shuffle to fulfill recursion requirement
+    def fisherYates_shuffle(self, deck, index=None):
+        # shuffle index starts at the end of the list
+        if index is None:
+            index = len(deck) - 1
+            
+        # base case: index reaches front of list
+        if index == 0:
+            return deck
+            
+        # select random index to swap with
+        random_index = random.randint(0, index)
         
+        # swap cards
+        temp = deck[index]
+        deck[index] = deck[random_index]
+        deck[random_index] = temp
+
+        # print(f"{deck}\n")
+        
+        # go through the deck recursively as index lowers to 0
+        return self.fisherYates_shuffle(deck, index - 1)
+
+# if __name__ == "__main__":
+#     deck = Deck()
+#     shuffled = deck.fisherYates_shuffle(deck.deck)
