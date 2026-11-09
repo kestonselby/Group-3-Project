@@ -16,7 +16,12 @@ parser.add_argument("--show-soft", action="store_true", help="Show soft Ace scor
 # cmd line argumment to enable dealer hole card (zay)
 parser.add_argument("--hole-card", action="store_true", help="Hide dealer's first card")
 
+# cmd line argument to display game history (keston) 
+parser.add_argument( "--history", action="store_true", help="Display saved Blackjack game history")
+
 args = parser.parse_args()
+
+
 
 # loads specific save deck as current game
 # if args.load_save:
@@ -34,10 +39,30 @@ args = parser.parse_args()
 
 # MAIN GAME LOGIC GOES HERE
 
+# File I/O and Command-Line Argument (Keston)
+def display_game_history():
+    try:
+        with open("game_history.txt", "r", encoding="utf-8") as file:
+            history = file.read()
 
+        print("\n========== GAME HISTORY ==========")
+
+        if history.strip():
+            print(history)
+        else:
+            print("No game history available.")
+
+        print("=================================")
+
+    except FileNotFoundError:
+        print("\nNo game history file found.")
 
 
 def main():
+     # Keston's command-line history option
+    if args.history:
+        display_game_history()
+
     while True:
         # Import menu functions - to turn into tkinter ui as well if time permits
         print("\n1. Start Game")
