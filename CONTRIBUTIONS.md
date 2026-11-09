@@ -67,8 +67,8 @@ Worked example:
 
 | Student | OOP | File I/O | Recursion | Command-line args | Interface (TUI/GUI) |
 |---------|-----|----------|-----------|-------------------|---------------------|
-| <name>  |     |          |           |                   |                     |
-| keston  |     |   1a8cc8c       |           |                   |                     |
+| Jerome  | 9d4a1dd | 6fd          |           |                   |                     |
+| keston  |     | 1a8cc8c  |           |                   |                     |
 | <name>  |     |          |           |                   |                     |
 | <name>  |     |          |           |                   |                     |
 
