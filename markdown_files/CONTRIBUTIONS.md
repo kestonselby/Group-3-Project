@@ -69,7 +69,7 @@ Worked example:
 |---------|---------|----------|-----------|-------------------|---------------------|
 | Rayan   | d4c3640 | d4c3640  | d4c3640   | d4c3640           |                     |
 | Jerome  | 9d4a1dd | 6fd5a44  | 6fd5a44   | dcdc567           | 52acfd7             |
-| Keston  |         | 1a8cc8c  |           |                   |                     |
+| Keston  |  a90a966       | 1a8cc8c  |  a90a966         |   1717898                |  a5927a2                   |
 | Zay Ya  | 4b9dcbd | 2cd1cb2  | a5a32ce   | bc053a7           | 9152202             |
 
 ## Milestone 3 - Final Product (Units 04-05)

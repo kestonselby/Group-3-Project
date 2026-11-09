@@ -67,7 +67,8 @@ def main():
         # Import menu functions - to turn into tkinter ui as well if time permits
         print("\n1. Start Game")
         print("2. View Arguments")
-        print("3. Exit")
+        print("3. View Game History")  
+        print("4. Exit")
         choice = input("Enter choice: ")
 
         match choice:
@@ -95,7 +96,10 @@ def main():
                                 print("\nINVALID NUMBER.")
                             pass
                         case _: break
-            case "3":
+            case "3": 
+                 if args.history:
+                        display_game_history()
+            case "4":
                 break
 
 if __name__ == '__main__':

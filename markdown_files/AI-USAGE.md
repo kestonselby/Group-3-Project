@@ -83,7 +83,7 @@ changed and how you tested it.
 |---------|-----------------|-------------|
 | Rayan   |    ChatGPT      | AI was used for programming concept explanations (argparse and file i/o), implementation planning, and help identifying logic errors. |
 | Zay Ya  |    Gemini       | AI was used to diagnose errors and investigate possible solutions to a plan.  |
-| <name>  |                 |             |
+| Keston  |   ChatGPT            | AI was used for explaining File I/O and identify errors in my code for it and explaining why.            |
 | <name>  |                 |             |
 
 ### Milestone 3 - Final Product (AI-assisted coding allowed)

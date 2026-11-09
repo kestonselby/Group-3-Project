@@ -109,3 +109,48 @@ Expand m1's deck system using oop principles, deck is now responsible for creati
 5. loadDeck reads selected save from JSON file for use in game
 6. validateDeck checks each card before current deck is replaced with save deck
 7. when --load-save is added to the run command, selected save number is passed to loadDeck
+
+# Player Statistics, & History 
+Purpose:
+
+Expand the Blackjack game's functionality by introducing player statistics through OOP, recursive menu input validation, file handling for game history, and additional command-line functionality. OOP is implemented through a PlayerStats class that stores and manages player statistics. Recursion is used to validate menu selections by repeatedly requesting input until a valid choice is entered or the attempt limit is reached. File I/O allows saved game history to be retrieved and displayed, while argparse provides the ability to access game history directly when launching the program. The interface is also expanded with a Player Statistics menu option.
+
+Data:
+- PlayerStats class, responsible for managing player statistics
+- Integer variable rounds_played, stores the number of rounds played
+- Integer variable attempts, tracks the number of invalid menu attempts
+- List of valid menu choices, used to validate user input
+- String variable history, stores the contents read from the game history file
+- Text file game_history.txt, used to store and retrieve game records
+- Boolean command-line argument --history, determines whether game history should display at startup
+
+Functions/Responsibilities:
+
+1. PlayerStats - Class that manages and stores player statistics.
+2. __init__ - Initializes the PlayerStats object and sets rounds_played to zero.
+3. record_round - Increases the player's round counter when a round is recorded.
+4. display_stats - Displays the player's current statistics.
+5. get_valid_choice - Recursively validates user menu selections and limits invalid attempts to five.
+6. display_game_history - Opens and reads the saved game history file, then displays its contents.
+7. --history - Argparse command-line argument that allows users to display saved game history when launching the program.
+8. Player Statistics Menu Option - Allows users to access their player statistics directly through the main menu.
+
+Process:
+
+Step 1. A PlayerStats object is created using the PlayerStats class, initializing the player's round counter to zero.
+
+Step 2. When a round is recorded, record_round increases the rounds_played variable.
+
+Step 3. When the player selects the statistics option from the menu, display_stats displays the current statistics.
+
+Step 4. When the user enters a menu selection, get_valid_choice checks whether the selection is valid.
+
+Step 5. If the selection is invalid, the function calls itself again and increases the attempt counter. After five invalid attempts, the function stops.
+
+Step 6. display_game_history opens game_history.txt in read mode and retrieves previously saved game records.
+
+Step 7. If the history file cannot be found, exception handling displays an appropriate message instead of allowing the program to crash.
+
+Step 8. When --history is included in the command-line launch, the program checks the argument and calls display_game_history to display the saved records.
+
+Step 9. The Player Statistics menu option connects the user interface to the PlayerStats object, allowing statistics to be accessed through the main menu.

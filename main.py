@@ -19,7 +19,7 @@ deckValues = { "2" : 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8,
 dealerHand = []
 playerHand = []
 
-# Slice: OOP - Player Statistics (Keston)
+# Slice 3: OOP - Player Statistics (Keston)
 
 class PlayerStats:
     def __init__(self):
@@ -286,7 +286,7 @@ def playgame(max_rounds=2):
                 # break
 
             # List of actions for player to take
-            print("\n1. Hit | 2. Pass | 3. Split | 4. Forfeit") # 5. Double down
+            print("\n1. Hit | 2. Stand | 3. Split | 4. Forfeit") # 5. Double down
 
             # Hit, pass, split(if both cards have the same value (e.g. both are 5, king + queen)), forfeit, (double down)
             while True:
